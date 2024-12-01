@@ -6,3 +6,6 @@ WORKDIR /app
 
 # Copy the current directory contents into the container's /app directory
 COPY . /app
+
+# Install dependencies
+RUN bundler install && apt update && apt install -y vim

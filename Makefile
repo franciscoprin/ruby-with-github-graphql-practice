@@ -24,7 +24,7 @@ test:
 
 # Start a shell inside the Docker container for debugging
 shell:
-	docker run -it -v $(PWD):/app --user $(id -u):$(id -g) --rm $(IMAGE_NAME) /bin/bash
+	docker run -it --env-file .env -v $(PWD):/app --user $(id -u):$(id -g) --rm $(IMAGE_NAME) /bin/bash
 
 # Remove the Docker image
 clean:

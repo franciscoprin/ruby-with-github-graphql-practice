@@ -1,17 +1,17 @@
 require 'graphql/client'
 require 'graphql/client/http'
+require 'dotenv/load'
 require 'byebug'
 
 module GitHubGraphQL
-    HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
+    HTTP = GraphQL::Client::HTTP.new(ENV['GITHUB_GRAPHQL_URL']) do
         def headers(context)
-            { "Authorization" => "Bearer #{ENV['GITHUB_TOKEN']}" }
+            { 'Authorization' => "Bearer #{ENV['GITHUB_TOKEN']}" }
         end
     end
 
     # Fetch latest schema on init, this will make a network request
     Schema = GraphQL::Client.load_schema(HTTP)
-
 
     Client = GraphQL::Client.new(schema: Schema, execute: HTTP)
 end
@@ -106,7 +106,7 @@ def fetch_pull_requests(query, batch_size)
         end
     end
 end
-  
+
 # Usage
 query = "is:open is:pr archived:false org:Microsoft org:Google"
 batch_size = 100
@@ -123,7 +123,7 @@ pr_enumerator.each do |pr|
     puts " * Created At: #{pr.created_at}"
     puts " * Branch name: #{pr.head_ref_name}"
     puts " * Base branch name: #{pr.base_ref_name}"
-    puts " * Author's username: #{pr.author.login}"
+    puts " * Author's username: #{pr.author&.login}"
 
     # Labels handling
     puts " * Labels:"
