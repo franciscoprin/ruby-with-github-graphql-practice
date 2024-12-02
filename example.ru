@@ -25,7 +25,7 @@ GitHubGraphQLPullRequest.fetch(query, batch_size).each do |pr|
     
     # Repo handling
     puts " * Repository's Info:"
-    puts "   * Name with owner: #{pr.repository.name_with_owner}"
+    puts "   * Name with owner: #{pr.repository.full_name}"
     puts "   * Name: #{pr.repository.name}"
 
     # Commit handling
